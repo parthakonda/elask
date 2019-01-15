@@ -1,0 +1,9 @@
+elasticsearch-dsl==6.0.1
+flasgger==0.8.0
+Flask==0.12.2
+Flask-Cors==3.0.3
+Flask-JWT==0.3.2
+Flask-RESTful==0.3.6
+marshmallow==2.15.0
+bcrypt==3.1.4
+pandas==0.23.0

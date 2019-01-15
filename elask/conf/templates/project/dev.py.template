@@ -1,0 +1,32 @@
+"""
+User Settings
+"""
+from datetime import datetime, timedelta
+
+# Elasticsearch Domain
+ELASTICSEARCH_DOMAIN = 'http://localhost:9200'
+
+# Installed Apps
+INSTALLED_APPS = [
+]
+
+# Secret key for password hashing
+SECRET_KEY = 'super-secret'
+
+# Enable JWT (You need to configure JWT settings)
+# JWT callbacks
+# JWT = {
+#     'verify': '<verify_handler>',
+#     'identity': '<identity_handler>',
+#     'payload_handler': '<payload_handler>'
+# }
+# JWT_AUTH_HEADER_PREFIX = 'Token'
+# JWT_AUTH_USERNAME_KEY = 'email'
+# JWT_EXPIRATION_DELTA = timedelta(days=1)
+# Elasticsearch Index Doc for authentication
+# AUTHENTICATION_MODEL = '<path.model>'
+
+ENABLE_JWT = False
+
+# Tenant JWT field
+TENANT_FIELD = "cusomer"

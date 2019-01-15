@@ -1,0 +1,3 @@
+from elask.serializers import Serializer
+
+# you can create your serializers here

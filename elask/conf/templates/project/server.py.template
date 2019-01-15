@@ -1,0 +1,61 @@
+from flask import Flask, Blueprint
+from flask_restful import reqparse, abort, Api, Resource
+
+from flask import Flask
+from flask_jwt import JWT, jwt_required
+from importlib import import_module
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+
+from flasgger import Swagger
+Swagger(app)
+
+settings_module = 'settings.dev'
+
+def import_component(name):
+    """
+    To dynamically import the object (func, class, variable)
+    """
+    _resolve = name.split('.')
+    _module = _resolve[:-1]
+    _component = _resolve[-1]
+    mod = import_module(".".join(_module))
+    return getattr(mod, _component)
+
+# 1. Import settings module dynamically
+settings = import_module(settings_module)
+DEFAULT_SETTINGS = ['__builtins__', '__doc__', '__file__', '__name__', '__package__']
+USER_SETTINGS = dir(settings)
+
+
+# Update app config dynamically
+for item in list(set(USER_SETTINGS) - set(DEFAULT_SETTINGS)):
+    app.config.update({item : getattr(settings, item)})
+
+
+# Try to import routes
+for userapp in app.config.get('INSTALLED_APPS', []):
+    try:
+        exec('from {}.routes import *'.format(userapp))
+    except Exception as e:
+        print((userapp, ':', e))
+        pass
+
+# initiate JWT if configured
+if 'JWT' in app.config:
+    # import verify and identity
+    verify = import_component(app.config['JWT']['verify'])
+    identity = import_component(app.config['JWT']['identity'])
+    jwt = JWT(app, verify, identity)
+    jwt.jwt_payload_callback = import_component(app.config['JWT']['payload_handler'])
+    
+
+from elasticsearch_dsl import connections
+connections.create_connection(hosts=[settings.ELASTICSEARCH_DOMAIN], timeout=20)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)

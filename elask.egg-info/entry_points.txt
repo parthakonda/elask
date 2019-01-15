@@ -1,0 +1,3 @@
+[console_scripts]
+elask-admin = elask.core.management:execute_from_command_line
+

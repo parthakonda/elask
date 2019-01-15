@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: elask
+Version: 3.9.4
+Summary: elask rest framework
+Home-page: https://github.com/inmar/elask.git
+Author: Partha Saradhi
+Author-email: parthasaradhi.konda@inmar.com
+License: UNKNOWN
+Download-URL: https://github.com/inmar/elask.git
+Description: UNKNOWN
+Keywords: elasticsearch,rest,rest api,inmar
+Platform: UNKNOWN
