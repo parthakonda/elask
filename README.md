@@ -1,13 +1,13 @@
 # Elask Framework
 
-A python based rest framework for elastcsearch. Built on top of flask & elasticsearch-dsl. The purpose of this framework is to provide REST Api development and also to provide the hooks to accomodating the business logic.
+A Python-based REST framework for Elasticsearch. Built on top of Flask and elasticsearch-dsl. Its purpose is to simplify REST API development with Elasticsearch and provide hooks for custom business logic.
 
 
 ## Create virtualenv
-```
+```bash
 virtualenv -p python3 venv
 ```
-This elask framework will only work with python3.x<br >
+This Elask framework is compatible only with Python 3.x.
 
 ## Activate virtualenv
 ```
@@ -15,39 +15,41 @@ source venv/bin/activate
 ```
 
 ## Installation
-```
+```bash
 pip3 install elask
 ```
 
 ## Creating your project
 
-```python
-# Syntax
-# elask-admin startproject --name <project_name>`
+To create a new project, use the `elask-admin startproject` command:
+```bash
+# elask-admin startproject --name <project_name>
 elask-admin startproject --name helloworld
 ```
 
 ## Project layout
 
-    helloworld    # Parent project directory
-    settings/
-        __init__.py
-        dev.py
+This will create a project directory with the following structure:
+```
+helloworld    # Parent project directory
+settings/
+    __init__.py
+    dev.py
+```
 
 ## Create application
-```python
-# Syntax
+
+To create a new application within your project, use `elask-admin startapp`:
+```bash
 # elask-admin startapp --name <app_name>
 elask-admin startapp --name services
 ```
 
 ## Create your model
 
-`services/models.py`
+### `services/models.py`
 ```python
 from elask.db import models
-
-# you can create your models here
 
 class User(models.Model):
     name = models.CharField()
@@ -59,11 +61,10 @@ class User(models.Model):
 ```
 
 ## Create your serializers
-`services/serializers.py`
+### `services/serializers.py`
 ```python
 from elask.serializers import Serializer
 
-# you can create your serializers here
 class UserSerializer(Serializer):
 
     class Meta:
@@ -71,7 +72,7 @@ class UserSerializer(Serializer):
 ```
 
 ## Create your viewsets
-`services/viewsets.py`
+### `services/viewsets.py`
 ```python
 from elask import viewsets
 from services.models import User
@@ -86,22 +87,23 @@ class UserViewSet(viewsets.ModelViewSet):
 ```
 
 ## Create your routes
-`services/routes.py`
+### `services/routes.py`
 ```python
 from server import app
 from flask_restful import Api
 from services.viewsets import UserViewSet
+
 api = Api(app)
 
 # Example
 api.add_resource(UserViewSet, '/user/', '/user/<pk>/')
 ```
 
-## Include app in 'INSTALLED_APPS`
-`settings/dev.py`
+## Include app in `INSTALLED_APPS`
+### `settings/dev.py`
 ```python
 """
-User Settings
+Development settings for the Elask project.
 """
 from datetime import datetime, timedelta
 
@@ -118,27 +120,39 @@ SECRET_KEY = 'super-secret'
 ```
 
 ## Migrate
-```
+```bash
 elask-admin migrate
 ```
 
 ## Run
-```
+```bash
 python server.py
 ```
 
-[http://localhost:5000/user/](http://localhost:5000/user/)
+Navigate to [http://localhost:5000/user/](http://localhost:5000/user/).
 
-You can perform REST operations on this (GET, PUT, POST, DELETE).
+You can now perform REST operations (GET, PUT, POST, DELETE) on this endpoint.
 
-# Available Management Command
+# Available Management Commands
 
-The following are the avaialble commands
+The following management commands are available:
+```bash
+elask-admin <command> <options>
+```
 
-`elask-admin <command> <options>`
+* `startproject`
+* `startapp`
+* `migrate`
+* `shell`
+* `help`
 
-* ## startproject
-* ## startapp
-* ## migrate
-* ## shell
-* ## help
+# Contributing
+Contributions are welcome! If you'd like to contribute to Elask, please follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix (`git checkout -b feature/your-feature-name` or `git checkout -b bugfix/issue-number`).
+3. Make your changes and commit them with clear and concise messages.
+4. Push your changes to your fork.
+5. Create a pull request to the main Elask repository.
+
+# License
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
